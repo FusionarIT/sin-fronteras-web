@@ -342,7 +342,7 @@ export function Popup({ onClose, alumno }) {
                                 )}
                             </div>
 
-                            {/* Deporte */}
+                            {/* DEPORTE */}
                             <div className="mb-2">
                                 <label className="font-bold">Deporte:</label>
                                 <div className="flex justify-center">
@@ -362,16 +362,19 @@ export function Popup({ onClose, alumno }) {
                                                     )}
                                                     className="ml-2 w-4 h-4"
                                                 />
-                                                <label className="ml-1">
+                                                <label
+                                                    htmlFor={deporte.value}
+                                                    className="ml-1"
+                                                >
                                                     {deporte.label}
                                                 </label>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
-                                {errors.deporte && (
+                                {editedAlumno.deporte.length === 0 && (
                                     <p className="text-red-500">
-                                        {errors.deporte.message}
+                                        Selecciona al menos un deporte
                                     </p>
                                 )}
                             </div>

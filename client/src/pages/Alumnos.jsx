@@ -73,17 +73,27 @@ export function Alumnos() {
         { value: "FutbolMixto", label: "Fútbol Mixto" },
     ];
 
+    // CHECKBOX DEPORTES
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    // isSubmitted es para mostrar el error en checkbox deporte
+    useEffect(() => {
+        if (Object.keys(errors).length > 0) {
+            setIsSubmitted(true);
+        }
+    }, [errors]);
     // Función para manejar cambios en los checkboxes de deporte
     const handleCheckboxChange = (e) => {
-        const { value } = e.target;
+        const { value, checked } = e.target;
         let updatedDeportes = [...alumnoToCreate.deporte];
 
-        if (e.target.checked) {
+        if (checked) {
             updatedDeportes.push(value);
         } else {
             updatedDeportes = updatedDeportes.filter((d) => d !== value);
         }
 
+        //console.log("Checkbox Change:", { value, checked, updatedDeportes });
         setAlumnoToCreate({ ...alumnoToCreate, deporte: updatedDeportes });
     };
 
@@ -152,6 +162,9 @@ export function Alumnos() {
 
     // Función para manejar el envío del formulario de creación de alumno
     const onSubmit = async (data) => {
+        // Lógica para checkboxes deportes
+
+        console.log("ho");
         try {
             // Lógica para determinar la fecha de pago
             let fechaPago = "";
@@ -488,23 +501,23 @@ export function Alumnos() {
                                                             deporte.value
                                                         )}
                                                         className="ml-2 w-4 h-4"
-                                                        /*                                               {...register("deporte", {
-                                                    required:
-                                                        "Selecciona al menos un deporte",
-                                                })} */
                                                     />
-                                                    <label className="ml-1">
+                                                    <label
+                                                        htmlFor={deporte.value}
+                                                        className="ml-1"
+                                                    >
                                                         {deporte.label}
                                                     </label>
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
-                                    {errors.deporte && (
-                                        <p className="text-red-500">
-                                            {errors.deporte.message}
-                                        </p>
-                                    )}
+                                    {isSubmitted &&
+                                        alumnoToCreate.deporte.length === 0 && (
+                                            <p className="text-red-500">
+                                                Selecciona al menos un deporte
+                                            </p>
+                                        )}
                                 </div>
 
                                 {/* PLAN */}

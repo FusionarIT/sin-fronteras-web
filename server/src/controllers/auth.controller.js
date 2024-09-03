@@ -95,7 +95,7 @@ export const login = async (req, res) => {
 export const verifyToken = async (req, res) => {
     const token = req.headers["authorization"]?.split(" ")[1]; // Obtener el token del header Authorization
 
-    console.log("token header: ", token);
+    //console.log("token header: ", token);
 
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
