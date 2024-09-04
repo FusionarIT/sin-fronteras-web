@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAlumnos } from "../../context/AlumnosContext";
 import { InfoItem } from "./InfoItem";
-import { formatFecha } from "../../utils/utils";
-import { formatHistorialPagos } from "../../utils/utils";
+import { formatHistorialPagos, formatFecha } from "../../utils/utils";
 import { Input } from "./Input";
 import { deportes } from "../../utils/constants";
 
@@ -14,8 +13,10 @@ export function Popup({ onClose, alumno }) {
     const [editedAlumno, setEditedAlumno] = useState(alumno);
     const [errors] = useState({});
 
+    //setPagos(pagos);
+    const pagos = alumno.historicoPagos || [];
     // Estado para almacenar los pagos
-    const [pagos] = useState([]);
+    //const [pagos, setPagos] = useState([]);
 
     // Inicializa isCustom solo si editedAlumno existe
     const [isCustom, setIsCustom] = useState(
@@ -220,6 +221,7 @@ export function Popup({ onClose, alumno }) {
                     label="Meses Abonados"
                     value={formatHistorialPagos(pagos)}
                 />
+                {console.log("pagos", pagos)}
 
                 <div className="flex justify-center mt-4 gap-4 w-full">
                     <button
@@ -268,7 +270,7 @@ export function Popup({ onClose, alumno }) {
                 </div>
             )}
             {showEditModal && (
-                <div className="fixed inset-0 bg-black text-black bg-opacity-50 flex justify-center items-center z-50">
+                <div className="fixed inset-0 bg-black text-black text-left bg-opacity-50 flex justify-center items-center z-50">
                     <div className="relative bg-white p-6 rounded-md w-4/5 h-[80vh] overflow-hidden custom-scrollbar overflow-y-scroll">
                         <button
                             type="button"
@@ -282,9 +284,9 @@ export function Popup({ onClose, alumno }) {
                         </h2>
                         <form onSubmit={handleSubmit}>
                             {/* Nombre */}
-                            <div className="mt-4 mb-4">
+                            <div className="mt-4 mb-2">
                                 <label className="font-bold">Nombre:</label>
-                                <input
+                                <Input
                                     type="text"
                                     id="nombre"
                                     name="nombre"
@@ -385,7 +387,7 @@ export function Popup({ onClose, alumno }) {
                                 <select
                                     value={editedAlumno.plan}
                                     onChange={handlePlanChange}
-                                    className="selectFocus w-full bg-white text-black border-2 border-slate-800 px-4 py-2 rounded-md"
+                                    className="selectFocus w-full bg-white text-xl text-black border-2 border-slate-800 px-4 py-2 rounded-md"
                                 >
                                     <option value="">Selecciona un plan</option>
                                     <option value="Plan Natación">
@@ -444,7 +446,7 @@ export function Popup({ onClose, alumno }) {
                                             : ""
                                     }
                                     onChange={handleFechaPagoChange}
-                                    className="selectFocus w-full bg-white text-black border-2 border-slate-800 px-4 py-2 rounded-md"
+                                    className="selectFocus w-full bg-white text-black text-xl border-2 border-slate-800 px-4 py-2 rounded-md"
                                 >
                                     <option value="">
                                         Selecciona una opción
@@ -546,11 +548,9 @@ export function Popup({ onClose, alumno }) {
                             </div>
 
                             {/* Abono */}
-                            <div className="mb-2">
-                                <label className="font-bold ml-6">
-                                    Abono con:
-                                </label>
-                                <div className="flex justify-center space-x-8 mt-2">
+                            <div className="mt-4 mb-2">
+                                <label className="font-bold">Abono con:</label>
+                                <div className="flex justify-center space-x-8 px-2 py-4 border-2 border-black/80 rounded-md">
                                     <div className="flex flex-col items-center">
                                         <div
                                             onClick={() =>

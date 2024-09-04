@@ -14,7 +14,7 @@ import { useAlumnos } from "../context/AlumnosContext";
 import { AlumnoCard } from "../components/alumnos/AlumnoCard";
 import { ImFileEmpty } from "react-icons/im";
 import { Input, Label } from "../components/ui";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Link, useLocation } from "react-router-dom";
 import {
     FaUser,
@@ -31,7 +31,9 @@ export function Alumnos() {
         register,
         handleSubmit,
         formState: { errors },
+        setError,
         watch,
+        reset,
     } = useForm();
     const { alumnos, getAlumnos, createAlumno } = useAlumnos();
 
@@ -96,6 +98,28 @@ export function Alumnos() {
         //console.log("Checkbox Change:", { value, checked, updatedDeportes });
         setAlumnoToCreate({ ...alumnoToCreate, deporte: updatedDeportes });
     };
+
+    /*
+        LEER
+        Con esto funciona que se ponga el . -> pero ver lo de fran
+        para agregarlo bien. (lo de las que el plan lo eliga)
+        de la pantalla plan.
+
+    */
+    /* // Función para formatear números con puntos de miles
+    const formatNumber = (value) => {
+        if (!value) return "";
+        return new Intl.NumberFormat("es-AR").format(value);
+    };
+    const handlePrecioChange = (e) => {
+        const rawValue = e.target.value.replace(/\./g, ""); // Elimina los puntos para convertirlo a número
+        const numericValue = Number(rawValue); // Convierte el string a número
+
+        setAlumnoToCreate({
+            ...alumnoToCreate,
+            precioEfectivo: numericValue, // Guarda el valor numérico
+        });
+    }; */
 
     // Para manejar el precio
     useEffect(() => {
@@ -162,9 +186,6 @@ export function Alumnos() {
 
     // Función para manejar el envío del formulario de creación de alumno
     const onSubmit = async (data) => {
-        // Lógica para checkboxes deportes
-
-        console.log("ho");
         try {
             // Lógica para determinar la fecha de pago
             let fechaPago = "";
@@ -176,7 +197,6 @@ export function Alumnos() {
 
             const deporteArray = alumnoToCreate.deporte;
             const deporteToString = deporteArray.join(", ");
-            //console.log(deporteToString);
 
             // Crear el objeto de datos a enviar
             const alumnoData = {
@@ -197,53 +217,8 @@ export function Alumnos() {
                 abonoEfectivo: alumnoToCreate.abonoEfectivo,
                 abonoTransferencia: alumnoToCreate.abonoTransferencia,
             };
-            // AJUSTO CADA VALOR DE LA TABLA:
-            // nombre - mail - telefono - deporte - plan - fecha comienzo - fecha pago
 
-            /*
-            No funciona esto
-            // Verificar si se ha seleccionado al menos un deporte
-            if (alumnoToCreate.deporte.length === 0) {
-                setValidationErrors({
-                    deporte: {
-                        message: "Selecciona al menos un deporte",
-                    },
-                });
-                return;
-            } */
-
-            // ajusto yo -> fecha comienzo - fecha pago
-
-            // plan
-
-            console.log("Alumno a crear:", alumnoData);
-            //console.log("deporte: ", deporteString);
-            // Del formulario traigo -> nombre - mail - telefono - deporte - plan
-
-            // TESTING -----
-            console.log("Alumno to create:", alumnoToCreate);
-            console.log("--- datos por separado ---");
-            console.log("nombre -", alumnoToCreate.nombre);
-            console.log("mail -", alumnoToCreate.mail);
-            console.log("telefono -", alumnoToCreate.telefono);
-            console.log("deporte -", alumnoToCreate.deporte);
-            console.log("plan -", alumnoToCreate.plan);
-            console.log("fechaComienzo -", alumnoToCreate.fechaComienzo);
-            console.log("fechaPago -", fechaPago);
-            console.log("precioEfectivo -", alumnoToCreate.precioEfectivo);
-            console.log(
-                "precioTransferencia -",
-                alumnoToCreate.precioTransferencia
-            );
-            console.log("abono", alumnoToCreate.abono);
-            console.log("abonoEfectivo", alumnoToCreate.abonoEfectivo);
-            console.log(
-                "abonoTransferencia",
-                alumnoToCreate.abonoTransferencia
-            );
-            // TESTING -----
-
-            await createAlumno(alumnoData); // Llama a la función createAlumno que se pasa como prop
+            createAlumno(alumnoData);
             setShowCreateModal(false); // Cierra el modal después de crear el alumno
             resetForm(); // Limpia el formulario después de la creación exitosa
         } catch (error) {
@@ -530,7 +505,7 @@ export function Alumnos() {
                                         })}
                                         value={alumnoToCreate.plan}
                                         onChange={handlePlanChange}
-                                        className="selectFocus w-full bg-white text-black border-2 border-slate-800 px-4 py-2 rounded-md"
+                                        className="selectFocus w-full bg-white text-xl text-black border-2 border-slate-800 px-4 py-2 rounded-md"
                                     >
                                         <option value="">
                                             Selecciona un plan
@@ -589,7 +564,7 @@ export function Alumnos() {
                                             required:
                                                 "Selecciona una opción de fecha de pago",
                                         })}
-                                        className="selectFocus w-full bg-white text-black border-2 border-slate-800 px-4 py-2 rounded-md"
+                                        className="selectFocus w-full bg-white text-xl text-black border-2 border-slate-800 px-4 py-2 rounded-md"
                                     >
                                         <option value="">
                                             Seleccione una opción
@@ -653,6 +628,14 @@ export function Alumnos() {
                                             <span className="text-xl text-black ml-2 mr-1 font-bold">
                                                 $
                                             </span>
+                                            {/* <Input
+                                                type="text"
+                                                value={formatNumber(
+                                                    alumnoToCreate.precioEfectivo
+                                                )}
+                                                className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
+                                                onChange={handlePrecioChange}
+                                            /> */}
                                             <Input
                                                 type="text"
                                                 value={
@@ -699,11 +682,11 @@ export function Alumnos() {
                                 </div>
 
                                 {/* ABONO */}
-                                <div className="mb-2">
-                                    <label className="font-bold ml-6">
+                                <div className="mt-4 mb-2">
+                                    <label className="font-bold">
                                         Abono con:
                                     </label>
-                                    <div className="flex justify-center space-x-8 mt-2">
+                                    <div className="flex justify-center space-x-8 px-2 py-4 border-2 border-black/80 rounded-md">
                                         <div className="flex flex-col items-center">
                                             <div
                                                 onClick={() =>
@@ -769,7 +752,7 @@ export function Alumnos() {
                                 </div>
 
                                 {/*  */}
-                                <div className="flex justify-center items-center gap-8 mt-8">
+                                <div className="flex justify-center items-center gap-8 mt-6">
                                     <button
                                         type="button"
                                         className="bg-gray-500 text-white px-4 py-2 rounded-md"

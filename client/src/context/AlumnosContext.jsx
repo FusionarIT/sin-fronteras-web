@@ -42,10 +42,21 @@ export function AlumnoProvider({ children }) {
         }
     };
 
+    /*     const checkEmailExists = async (email) => {
+        try {
+            const response = await api.get(
+                `/alumnos/check-email?email=${email}`
+            );
+            return response.data.exists; // Devuelve true si el email ya existe, false si no
+        } catch (error) {
+            console.error("Error al verificar el email:", error);
+            return false;
+        }
+    }; */
+
     const createAlumno = async (alumno) => {
         try {
             const res = await createAlumnoRequest(alumno);
-
             setAlumnos([...alumnos, res]);
         } catch (error) {
             console.error("Error agregando el alumno:", error);
@@ -113,6 +124,7 @@ export function AlumnoProvider({ children }) {
             value={{
                 alumnos,
                 getAlumnos,
+                //checkEmailExists,
                 createAlumno,
                 deleteAlumno,
                 getAlumno,
