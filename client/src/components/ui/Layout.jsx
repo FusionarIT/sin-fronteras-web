@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
     return (
         <div className="flex flex-col h-screen text-black">
             {/* Encabezado o barra superior (si la necesitas) */}
-            <header className="bg-white w-full h-20 flex items-center justify-between px-6">
+            <header className="bg-white w-full h-20 flex items-center px-6 md:px-36">
                 <img
                     src={logo}
                     alt="Logo Sin Fronteras"

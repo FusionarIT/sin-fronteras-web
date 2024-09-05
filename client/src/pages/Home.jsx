@@ -10,6 +10,16 @@ import { getAlumnosStatsRequest } from "../api/alumnos";
 import Layout from "../components/ui/Layout";
 import { FaArrowRight } from "react-icons/fa";
 
+const InfoCard = ({ onClick, count, text }) => (
+    <div
+        className="bg-paleta_2 my-2 rounded-md shadow-md hover:bg-paleta_1 flex items-center px-4 py-3 lg:py-4"
+        onClick={onClick}
+    >
+        <span className="text-2xl font-bold mr-4">{count}</span>
+        <span>{text}</span>
+    </div>
+);
+
 const Home = () => {
     const [totalAlumnos, setTotalAlumnos] = useState(0);
     const [abonaron, setAbonaron] = useState(0);
@@ -18,33 +28,6 @@ const Home = () => {
 
     const navigate = useNavigate();
 
-    // FALTA MEJORAR ESTO Y LISTO
-    // que el navigate me lleve bien - cambiar abono por abonoE y abonoT
-
-    /* useEffect(() => {
-        // Función para obtener los datos de la API
-        const fetchData = async () => {
-            try {
-                const {
-                    totalAlumnos,
-                    abonaron,
-                    noAbonaron,
-                    alumnosNoAbonaron,
-                } = await getAlumnosStatsRequest();
-
-                // Actualizar estados
-                setTotalAlumnos(totalAlumnos);
-                setAbonaron(abonaron);
-                setNoAbonaron(noAbonaron);
-                setAlumnosNoAbonaron(alumnosNoAbonaron);
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            }
-        };
-
-        fetchData();
-    }, []); */
-
     useEffect(() => {
         // Función para obtener los datos de la API
         const fetchData = async () => {
@@ -52,97 +35,62 @@ const Home = () => {
                 const { totalAlumnos, abonaron, noAbonaron } =
                     await getAlumnosStatsRequest();
 
-                //// Filtrar los alumnos que abonaron y los que no abonaron
-                //const siAbonaron = alumnos.filter(
-                //    (alumno) => alumno.abono === true
-                //);
-                //const noAbonaron = alumnos.filter(
-                //    (alumno) => alumno.abono === false
-                //);
-
                 setTotalAlumnos(totalAlumnos);
                 setAbonaron(abonaron);
                 setNoAbonaron(noAbonaron);
-
-                //if (abono) {
-                //    setAbonaron(abono);
-                //} else {
-                //    setNoAbonaron(abono);
-                //}
-
-                // Actualizar estados
-                //setTotalAlumnos(totalAlumnos);
-                //setAbonaron(abonaron);
-                //setNoAbonaron(noAbonaron);
-                //setAlumnosNoAbonaron(alumnosNoAbonaron);
             } catch (error) {
                 console.error("Error al obtener datos:", error);
             }
         };
-
         fetchData();
     }, []);
 
     return (
         <Layout>
-            <div className="mt-10 text-white">
+            <div className="mt-2 text-white md:w-1/2 md:m-auto">
                 <div className="text-center text-xl uppercase text-black block relative w-full before:h-1 before:bg-paleta_3 before:absolute before:w-full before:left-0 before:top-1/2 before:translate-y-1/2 before:z-0">
-                    <span className="relative z-10 bg-white px-2">
+                    <span className="text-xl relative z-10 bg-white px-2">
                         Información
                     </span>
                 </div>
 
-                <div
-                    className="bg-paleta_2 my-2 p-4 rounded-md shadow-md hover:bg-paleta_1"
+                <InfoCard
                     onClick={() => navigate("/alumnos")}
-                >
-                    <span className="text-2xl font-bold mr-2">
-                        {totalAlumnos}
-                    </span>
-                    <span>Alumnos Registrados</span>
-                </div>
+                    count={totalAlumnos}
+                    text="Alumnos Registrados"
+                />
 
-                <div
-                    className="bg-paleta_2 my-2 p-4 rounded-md shadow-md hover:bg-paleta_1"
+                <InfoCard
                     onClick={() =>
                         navigate("/alumnos", { state: { abono: false } })
                     }
-                >
-                    <span className="text-2xl font-bold mr-2">
-                        {noAbonaron}
-                    </span>
-                    <span>Faltan Abonar</span>
-                </div>
+                    count={noAbonaron}
+                    text="Faltan Abonar"
+                />
 
-                <div
-                    className="bg-paleta_2 my-2 p-4 rounded-md shadow-md hover:bg-paleta_1"
+                <InfoCard
                     onClick={() =>
                         navigate("/alumnos", { state: { abono: true } })
                     }
-                >
-                    <span className="text-2xl font-bold mr-2">{abonaron}</span>
-                    <span>Ya Abonaron</span>
-                </div>
+                    count={abonaron}
+                    text="Ya Abonaron"
+                />
 
-                <div className="mt-10 text-center text-xl uppercase text-black block relative w-full before:h-1 before:bg-paleta_3 before:absolute before:w-full before:left-0 before:top-1/2 before:translate-y-1/2 before:z-0">
+                <div className="mt-6 text-center text-xl uppercase text-black block relative w-full before:h-1 before:bg-paleta_3 before:absolute before:w-full before:left-0 before:top-1/2 before:translate-y-1/2 before:z-0">
                     <span className="relative z-10 bg-white px-2">Atajos</span>
                 </div>
 
-                <div
-                    className="bg-paleta_2 my-2 p-4 rounded-md shadow-md hover:bg-paleta_1 text-xl flex items-center justify-between px-8"
+                <InfoCard
                     onClick={() => navigate("/alumnos")}
-                >
-                    <span>Crear Alumno</span>
-                    <FaArrowRight className="text-xl" />
-                </div>
+                    text="Crear Alumno"
+                    count={<FaArrowRight className="text-xl" />}
+                />
 
-                <div
-                    className="bg-paleta_2 my-2 p-4 rounded-md shadow-md hover:bg-paleta_1 text-xl flex items-center justify-between px-8"
+                <InfoCard
                     onClick={() => navigate("/reportes")}
-                >
-                    <span>Ver Reportes</span>
-                    <FaArrowRight className="text-xl" />
-                </div>
+                    text="Ver Reportes"
+                    count={<FaArrowRight className="text-xl" />}
+                />
             </div>
         </Layout>
     );

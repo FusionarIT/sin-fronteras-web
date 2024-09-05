@@ -85,15 +85,13 @@ const Planes = () => {
 
     return (
         <Layout>
-            <h1 className="text-3xl uppercase text-center font-bold mt-4">
-                Planes
-            </h1>
+            <h1 className="text-2xl uppercase text-center font-bold">Planes</h1>
 
-            <hr className="w-52 m-auto border-2 border-paleta_3 mt-2 mb-6" />
+            <hr className="w-52 m-auto border-2 border-paleta_3 mt-2 mb-4" />
 
             <div className="flex justify-center mb-4">
                 <button
-                    className="flex items-center text-xl rounded bg-paleta_2 text-white py-3 px-6"
+                    className="flex items-center text-xl rounded bg-paleta_2 text-white py-2 px-6 lg:py-2 lg:px-4"
                     onClick={handleOpenCreateModal}
                 >
                     <FaPlus className="mr-4" />
@@ -216,12 +214,8 @@ const Planes = () => {
                 </div>
             )}
 
-            <div className="container mx-auto">
-                <span className="block text-center mb-4 text-2xl font-bold">
-                    Planes Actuales:
-                </span>
-
-                <div className="custom-scrollbar h-[calc(100vh-450px)] overflow-y-scroll overflow-hidden border-2 border-slate-800 rounded-lg">
+            <div className="container mx-auto md:w-1/2">
+                <div className="custom-scrollbar h-[calc(100vh-350px)] overflow-y-scroll overflow-hidden border-2 border-slate-800 rounded-lg">
                     {planes.length === 0 ? (
                         <div className="text-center text-gray-500 p-4">
                             <p>No hay planes, agrega uno nuevo.</p>

@@ -191,6 +191,16 @@ export function Popup({ onClose, alumno }) {
     return (
         <div className="fixed inset-0 bg-black text-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="relative bg-white p-6 rounded-md w-4/5 h-[80vh] overflow-hidden custom-scrollbar overflow-y-scroll">
+                <button
+                    type="button"
+                    className="absolute top-4 right-4 font-bold rounded-full bg-paleta_3 px-4 py-2"
+                    onClick={handleCloseModal}
+                >
+                    ✕
+                </button>
+                <h2 className="font-bold text-center pr-10 mb-6 md:pr-0 md:text-xl">
+                    Más información del usuario:
+                </h2>
                 <InfoItem label="Nombre" value={alumno.nombre} />
                 <InfoItem label="Mail" value={alumno.mail} />
                 <InfoItem label="Teléfono" value={alumno.telefono} />

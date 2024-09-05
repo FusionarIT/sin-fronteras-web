@@ -6,10 +6,10 @@
 export const InfoItem = ({ label, value }) => {
     return (
         <div className="flex flex-col items-center w-full">
-            <span className="bg-paleta_1 uppercase font-bold text-sm p-2 text-center text-white w-full">
+            <span className="bg-paleta_1 uppercase font-bold text-sm p-2 text-center text-white w-full md:w-2/3">
                 {label}
             </span>
-            <p className="text-black py-4 text-center text-xl w-full border-2 border-gray-500 border-t-0">
+            <p className="text-black py-4 text-center text-xl w-full border-2 border-gray-500 border-t-0 md:w-2/3">
                 {value}
             </p>
         </div>

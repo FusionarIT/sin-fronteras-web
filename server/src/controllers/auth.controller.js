@@ -8,11 +8,12 @@ export const register = async (req, res) => {
     const { email, password, username } = req.body;
 
     try {
+        // SEGUIR ACA - si el mail existe error
         //primero valido al usuario
-        const userFound = await User.findOne({ email });
-        if (userFound) {
-            return res.status(400).json(["The email already exists"]);
-        }
+        //const userFound = await User.findOne({ email });
+        //if (userFound) {
+        //    return res.status(400).json(["El mail ingresado ya existe"]);
+        //}
 
         const passwordHash = await bcrypt.hash(password, 10);
 
@@ -57,14 +58,14 @@ export const login = async (req, res) => {
         const userFound = await User.findOne({ email });
 
         if (!userFound) {
-            return res.status(400).json({ message: "User not found" });
+            return res.status(400).json({ message: "Usuario no encontrado" });
         }
 
         //.compare devuelve true o false
         const isMatch = await bcrypt.compare(password, userFound.password);
 
         if (!isMatch) {
-            return res.status(400).json({ message: "Incorrect password" });
+            return res.status(400).json({ message: "Contraseña incorrecta" });
         }
 
         // Creo el token y lo envio al frontend
@@ -98,17 +99,17 @@ export const verifyToken = async (req, res) => {
     //console.log("token header: ", token);
 
     if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "No autorizado" });
     }
 
     jwt.verify(token, TOKEN_SECRET, async (err, user) => {
         if (err) {
-            return res.status(401).json({ message: "Unauthorized" });
+            return res.status(401).json({ message: "No autorizado" });
         }
 
         const userFound = await User.findById(user.id);
         if (!userFound) {
-            return res.status(401).json({ message: "Unauthorized" });
+            return res.status(401).json({ message: "No autorizado" });
         } else {
             return res.json({
                 id: userFound._id,

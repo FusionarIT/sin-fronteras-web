@@ -319,7 +319,7 @@ export function Alumnos() {
 
                     <div className="flex justify-center">
                         <button
-                            className="flex items-center text-lg rounded bg-paleta_2 text-white py-2 px-4"
+                            className="flex items-center text-lg rounded bg-paleta_2 text-white py-2 px-6 lg:py-2 lg:px-4"
                             onClick={handleOpenCreateModal}
                         >
                             <FaPlus className="mr-4" />
@@ -331,11 +331,11 @@ export function Alumnos() {
                         <input
                             type="search"
                             placeholder="Buscar Alumno..."
-                            className="block p-2 my-4 w-5/6 m-auto rounded-md text-black border-2 border-gray-500"
+                            className="block px-4 py-1 lg:py-2 mt-2 lg:my-4 w-5/6 m-auto rounded-md text-black border-2 border-gray-500"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <span className="block mt-2 mb-1 text-center text-2xl font-bold">
+                        <span className="hidden lg:block mt-2 mb-1 text-center text-2xl font-bold">
                             {abono === true
                                 ? "Alumnos que abonaron:"
                                 : abono === false
@@ -344,7 +344,7 @@ export function Alumnos() {
                         </span>
                     </div>
 
-                    <div className="custom-scrollbar h-[calc(100vh-450px)] overflow-y-scroll overflow-hidden border-2 border-slate-800 rounded-lg">
+                    <div className="custom-scrollbar flex flex-col items-center h-[calc(100vh-390px)] overflow-y-scroll gap-4 mt-3 overflow-hidden border-2 border-slate-800 rounded-lg md:h-[calc(100vh-480px)] md:grid md:grid-cols-2 lg:grid-cols-3 md:p-4">
                         {filteredAlumnos.length === 0 ? (
                             <div className="text-center text-gray-500 p-4">
                                 <p>No hay alumnos en esta categoría.</p>
