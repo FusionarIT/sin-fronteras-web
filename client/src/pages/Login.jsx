@@ -65,7 +65,7 @@ export function Login() {
                         type="password"
                         {...register("password", { required: true })}
                         placeholder="Password"
-                        className="w-full bg-white px-4 py-2 my-2 rounded-md md:w-1/2 md:flex md:justify-center md:m-auto md:mt-4"
+                        className="w-full bg-white px-4 py-2 my-2 rounded-md md:w-1/2 md:flex md:justify-center mdnp:m-auto md:mt-4"
                     />
                     {errors.password && (
                         <p className="text-red-500 font-bold">
