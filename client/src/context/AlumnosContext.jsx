@@ -18,6 +18,7 @@ import {
     getAlumnosRequest,
     updateAlumnoRequest,
 } from "../api/alumnos";
+import { mockAlumnos } from "../mockData";
 
 const AlumnosContext = createContext();
 
@@ -35,10 +36,10 @@ export function AlumnoProvider({ children }) {
     const getAlumnos = async () => {
         try {
             const res = await getAlumnosRequest();
-
             setAlumnos(res);
         } catch (error) {
-            console.error("Error al obtener alumnos:", error);
+            console.warn("API no disponible, usando datos de demo:", error.message);
+            setAlumnos(mockAlumnos);
         }
     };
 
@@ -76,8 +77,8 @@ export function AlumnoProvider({ children }) {
 
     const updateAlumno = async (id, alumno) => {
         try {
-            console.log("El alumno a actualizar es:", alumno.nombre, id);
-            console.log("Sus datos:", alumno);
+            //console.log("El alumno a actualizar es:", alumno.nombre, id);
+            //console.log("Sus datos:", alumno);
 
             // Realizar la solicitud HTTP para actualizar el alumno
             const res = await updateAlumnoRequest(id, alumno);
@@ -87,14 +88,14 @@ export function AlumnoProvider({ children }) {
                 // Actualizar el estado local de los alumnos
                 setAlumnos(alumnos.map((a) => (a._id === id ? res.data : a)));
 
-                console.log("Alumno actualizado exitosamente:", res.data);
+                //console.log("Alumno actualizado exitosamente:", res.data);
 
                 // Mostrar en consola los datos del historial de pagos si se registró un nuevo pago
                 if (res.data.historicoPagos) {
-                    console.log(
-                        "Historial de pagos actualizado:",
-                        res.data.historicoPagos
-                    );
+                    //console.log(
+                    //    "Historial de pagos actualizado:",
+                    //    res.data.historicoPagos
+                    //);
 
                     // Aquí puedes actualizar el estado del historial de pagos si es necesario
                     setPagos(res.data.historicoPagos);

@@ -32,7 +32,7 @@ export function AlumnoCard({ alumno }) {
         const { value } = e.target;
         let updatedDeportes;
 
-        console.log(value);
+        //console.log(value);
 
         if (editedAlumno.deporte.includes(value)) {
             // Si el deporte ya está seleccionado, removerlo

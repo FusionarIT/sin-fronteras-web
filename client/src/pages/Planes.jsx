@@ -74,7 +74,7 @@ const Planes = () => {
                 precioEfectivo: planToCreate.precioEfectivo,
                 precioTransferencia: planToCreate.precioTransferencia,
             };
-            console.log("Plan a crear", planData);
+            //console.log("Plan a crear", planData);
             await createPlan(planData);
             setShowCreateModal(false);
             //resetForm();

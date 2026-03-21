@@ -3,10 +3,9 @@
 
 */
 
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAlumnosStatsRequest } from "../api/alumnos";
+import { useAlumnos } from "../context/AlumnosContext";
 import Layout from "../components/ui/Layout";
 import { FaArrowRight } from "react-icons/fa";
 
@@ -21,29 +20,16 @@ const InfoCard = ({ onClick, count, text }) => (
 );
 
 const Home = () => {
-    const [totalAlumnos, setTotalAlumnos] = useState(0);
-    const [abonaron, setAbonaron] = useState(0);
-    const [noAbonaron, setNoAbonaron] = useState(0);
-    const [alumnosNoAbonaron, setAlumnosNoAbonaron] = useState([]);
-
+    const { alumnos, getAlumnos } = useAlumnos();
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Función para obtener los datos de la API
-        const fetchData = async () => {
-            try {
-                const { totalAlumnos, abonaron, noAbonaron } =
-                    await getAlumnosStatsRequest();
-
-                setTotalAlumnos(totalAlumnos);
-                setAbonaron(abonaron);
-                setNoAbonaron(noAbonaron);
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            }
-        };
-        fetchData();
+        getAlumnos();
     }, []);
+
+    const totalAlumnos = alumnos.length;
+    const abonaron = alumnos.filter((a) => a.abono === true).length;
+    const noAbonaron = alumnos.filter((a) => a.abono === false).length;
 
     return (
         <Layout>

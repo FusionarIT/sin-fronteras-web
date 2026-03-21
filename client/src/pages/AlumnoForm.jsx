@@ -31,7 +31,7 @@ export function AlumnoForm() {
             if (params.id) {
                 const alumno = await getAlumno(params.id);
                 setValue("nombre", alumno.nombre);
-                console.log(alumno);
+                //console.log(alumno);
                 //demas valores
                 //setValue("completed", alumno.completed)
             }
@@ -64,7 +64,7 @@ export function AlumnoForm() {
 
             // navigate("/alumnos")
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     };
 

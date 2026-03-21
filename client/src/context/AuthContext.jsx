@@ -45,8 +45,8 @@ export const AuthProvider = ({ children }) => {
             // Obtener el token del servidor
             const { token, ...userData } = res.data;
 
-            console.log("token frontend: ", token);
-            console.log("userData: ", userData);
+            //console.log("token frontend: ", token);
+            //console.log("userData: ", userData);
 
             // Setear el token en una cookie usando js-cookie
             Cookies.set("token", token, { expires: 7, path: "/" });
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
             setUser(userData);
             setIsAuthenticated(true);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             if (Array.isArray(error.response.data)) {
                 return setErrors(error.response.data);
             } else {
@@ -108,7 +108,7 @@ export const AuthProvider = ({ children }) => {
                 }
             } catch (error) {
                 // Si ocurre un error, se considera que el usuario no está autenticado
-                console.log(error);
+                //console.log(error);
                 setIsAuthenticated(false);
                 setUser(null);
             } finally {

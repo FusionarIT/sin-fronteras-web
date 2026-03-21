@@ -82,7 +82,7 @@ export function Popup({ onClose, alumno }) {
     // Guardar los datos actualizados
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Alumno editado:", editedAlumno);
+        //console.log("Alumno editado:", editedAlumno);
 
         // Convertir el array deportes a una cadena
         const deporteArray = editedAlumno.deporte;
@@ -231,7 +231,7 @@ export function Popup({ onClose, alumno }) {
                     label="Meses Abonados"
                     value={formatHistorialPagos(pagos)}
                 />
-                {console.log("pagos", pagos)}
+                {/* console.log("pagos", pagos) */}
 
                 <div className="flex justify-center mt-4 gap-4 w-full">
                     <button

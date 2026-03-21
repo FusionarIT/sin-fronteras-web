@@ -29,14 +29,14 @@ function App() {
                         <main>
                             {/* navbar */}
                             <Routes>
-                                <Route path="/login" element={<Login />} />
+                                {/* <Route path="/login" element={<Login />} />
                                 <Route
                                     path="/register"
                                     element={<Register />}
-                                />
+                                /> */}
 
                                 {/* aca las paginas privadas al logearse */}
-                                <Route element={<ProtectedRoute />}>
+                                {/* <Route element={<ProtectedRoute />}> */}
                                     <Route path="/" element={<Home />} />
                                     <Route
                                         path="/reportes"
@@ -54,7 +54,7 @@ function App() {
                                         path="/ajustes"
                                         element={<Ajustes />}
                                     />
-                                </Route>
+                                {/* </Route> */}
                             </Routes>
                         </main>
                     </BrowserRouter>

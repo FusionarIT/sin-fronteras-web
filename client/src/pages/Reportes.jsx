@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/ui/Layout";
 import { getAlumnosPagosRequest } from "../api/alumnos";
+import { mockReportes } from "../mockData";
 
 const Reportes = () => {
     const currentMonth = new Date().getMonth() + 1;
@@ -26,16 +27,17 @@ const Reportes = () => {
                     mesSeleccionado,
                     añoSeleccionado
                 );
-                //console.log(mesSeleccionado, añoSeleccionado); // Agrega este log para ver el valor
-                // Actualizar estados
                 setTotalRecaudado(totalRecaudado);
             } catch (error) {
-                console.error("Error al obtener datos:", error);
+                console.warn("API no disponible, usando datos de demo:", error.message);
+                const clave = `${mesSeleccionado}-${añoSeleccionado}`;
+                const mock = mockReportes[clave];
+                setTotalRecaudado(mock ? mock.totalRecaudado : 0);
             }
         };
 
         fetchData();
-    }, [mesSeleccionado, añoSeleccionado]); // Dependencias para volver a cargar los datos cuando cambien
+    }, [mesSeleccionado, añoSeleccionado]);
 
     return (
         <Layout>
